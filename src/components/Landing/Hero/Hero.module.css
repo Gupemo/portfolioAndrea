@@ -1,0 +1,94 @@
+.hero {
+  min-height: 100vh;
+  padding: 3rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--background-main);
+  color: var(--color-main);
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+
+  max-width: 1200px;
+  width: 100%;
+}
+
+.profilePicture img {
+  border-radius: 15px;
+  object-fit: cover;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  max-width: 500px;
+}
+
+.name {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.name h1 {
+  font-weight: 700;
+}
+
+.title {
+  color: rgb(255, 188, 65);
+}
+
+.profileInfo {
+  line-height: 1.7;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Tablet */
+
+@media (max-width: 1024px) {
+  .profile {
+    gap: 2rem;
+  }
+
+  .name h1 {
+    font-size: 2.5rem;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  .profile {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .info {
+    align-items: center;
+  }
+
+  .buttons {
+    justify-content: center;
+  }
+
+  .name h1 {
+    font-size: 2rem;
+  }
+
+  .title {
+    font-size: 1.3rem;
+  }
+}
