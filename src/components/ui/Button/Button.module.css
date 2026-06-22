@@ -1,0 +1,41 @@
+.button {
+  padding: 0.9rem 1.8rem;
+
+  border: none;
+  border-radius: 10px;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.primary {
+  background-color: rgb(255, 188, 65);
+  color: #222;
+}
+
+.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 188, 65, 0.35);
+}
+.secondary {
+  background-color: transparent;
+  color: var(--color-main);
+
+  border: 2px solid rgb(255, 188, 65);
+}
+
+.secondary:hover {
+  background-color: rgb(255, 188, 65);
+  color: #222;
+  transform: translateY(-2px);
+}
+.button:focus-visible {
+  outline: 3px solid rgba(255, 188, 65, 0.5);
+  outline-offset: 3px;
+}
