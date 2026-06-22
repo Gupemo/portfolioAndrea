@@ -1,0 +1,73 @@
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal {
+  position: relative;
+  width: 90%;
+  max-width: 700px;
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.camp {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.camp label {
+  color: #333;
+}
+
+.camp input,
+.camp textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.camp input:focus,
+.camp textarea:focus {
+  outline: none;
+  border-color: rgb(255, 188, 65);
+  box-shadow: 0 0 0 3px rgba(255, 188, 65, 0.2);
+}
+
+.camp textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.buttons {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
