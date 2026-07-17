@@ -6,8 +6,7 @@ CREATE TABLE IF NOT EXISTS contact (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(250) NOT NULL,
     email VARCHAR(250) NOT NULL,
-    message TEXT NOT NULL,
-)
+    message TEXT NOT NULL)
 
 -- =========================
 -- ILLUSTRATIONS
