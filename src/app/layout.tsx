@@ -4,7 +4,6 @@ import { TranslationsProvider } from "@/context/TranslationsContext";
 import { Locale } from "@/types/frontend";
 import { cookies } from "next/headers";
 import "./globals.css";
-
 export const metadata: Metadata = {
   title: "Andrea larrumbide",
   description: "Illustrationd and photography porfolio",
@@ -24,7 +23,9 @@ export default async function RootLayout({
           position="top-right"
         />
         <TranslationsProvider initialLocale={locale as Locale}>
-          {children}
+          <main>
+            {children}
+          </main>
 
         </TranslationsProvider>
       </body>
