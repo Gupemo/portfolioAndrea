@@ -1,0 +1,28 @@
+.dashboard {
+  display: grid;
+  min-height: 100vh;
+  transition: grid-template-columns .3s;
+}
+
+.open {
+  grid-template-columns: 260px 1fr;
+}
+
+.closed {
+  grid-template-columns: 70px 1fr;
+}
+.main {
+  padding: 2rem;
+}
+
+@media (max-width:768px){
+
+  .dashboard{
+    display:block;
+  }
+
+  .main{
+    padding:1rem;
+  }
+
+}
