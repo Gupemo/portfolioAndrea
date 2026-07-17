@@ -1,20 +1,32 @@
 .hero {
+  position: relative;
   min-height: 100vh;
   padding: 3rem;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
-  background-color: var(--background-main);
   color: var(--color-main);
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/background-desktop.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+.hero a {
+  text-decoration: none;
 }
 
 .profile {
   display: flex;
   align-items: center;
   gap: 4rem;
-
   max-width: 1200px;
   width: 100%;
 }
@@ -27,8 +39,7 @@
 .info {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-
+  gap: 2rem;
   max-width: 500px;
 }
 
@@ -71,6 +82,12 @@
 /* Mobile */
 
 @media (max-width: 768px) {
+  .hero {
+    background-image: url("/background-mobile.png");
+    background-size: cover;
+    background-position: center;
+  }
+  
   .profile {
     flex-direction: column;
     text-align: center;
