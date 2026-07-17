@@ -71,3 +71,14 @@
   margin-top: 1rem;
   justify-content: center;
 }
+
+.error{
+  display: block;
+  padding: 0.7rem 1rem;
+  border-radius: 0.8rem;
+  background-color: #fee2e2;
+  color: #b91c1c;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 500;
+}
