@@ -10,30 +10,30 @@ export const TranslationsContext =
 
 export function TranslationsProvider({
   children,
-  initialLocale = "en"
+  initialLocale = "en",
 }: {
   children: ReactNode;
   initialLocale?: Locale;
 }) {
   const [locale, setLocale] = useState<Locale>(initialLocale);
 
-  const toggleLanguage = () => {
-    setLocale(prev => {
-      const next = prev === "es" ? "en" : "es";
-      document.cookie = `locale=${next}; path=/; max-age=31536000`;
-      return next;
-    });
+  const changeLanguage = (newLocale: Locale) => {
+    setLocale(newLocale);
+    document.cookie = `locale=${newLocale}; path=/; max-age=31536000`;
   };
 
   const translate = useMemo(() => {
     return locale === "es" ? es : en;
   }, [locale]);
 
-  const value = useMemo(() => ({
-    locale,
-    translate,
-    toggleLanguage
-  }), [locale, translate]);
+  const value = useMemo(
+    () => ({
+      locale,
+      translate,
+      changeLanguage,
+    }),
+    [locale, translate]
+  );
 
   return (
     <TranslationsContext.Provider value={value}>

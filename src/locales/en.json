@@ -3,7 +3,30 @@
     "altImg": "Andrea's image", 
     "title": "Illustrator & Photographer",
     "description": "texto de descripcion",
-    "viewPortfolio": "View portfolio",
+    "viewPortfolio": "Explore my work",
     "contact": "Contact me"
+  },
+  "contactModal": {
+    "title": "Contact with me!",
+    "name": "Name",
+    "email": "E-mail",
+    "text": "Message",
+    "submit": "Contact",
+    "reset": "Reset",
+    "placeHolders": {
+      "name": "Write your name",
+      "email": "Send me your email",
+      "text": "Write your message! will answer as soon as possible"
+    },
+    "toasts": {
+      "error": "Failed to send message",
+      "success": "Your message has been sent"
+    },
+    "errors": {
+      "name": "Name is required",
+      "email": "E-mail is required",
+      "text": "Please, enter a message",
+      "wrongMail": "Please, use a valid email address: address@name.domain"
+    }
   }
 }

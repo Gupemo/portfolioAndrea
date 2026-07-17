@@ -7,7 +7,7 @@ export type Locale = "es" | "en";
 export type TranslationsContextType = {
   locale: Locale;
   translate: Translations;
-  toggleLanguage: () => void;
+  changeLanguage: (locale: Locale) => void;
 };
 
 export type ContactType = {

@@ -1,9 +1,32 @@
 {
   "landing": {
     "altImg": "Imagen de andrea", 
-    "title": "Ilustradora y fotografía",
+    "title": "Ilustradora & fotografía",
     "description": "texto de descripcion",
-    "viewPortfolio": "Ver Portfolio",
+    "viewPortfolio": "Mira mis trabajos",
     "contact": "Contacta conmigo"
+  },
+    "contactModal": {
+    "title": "Contacta conmigo!",
+    "name": "Nombre",
+    "email": "E-mail",
+    "text": "Mensaje",
+    "submit": "Contactar",
+    "reset": "Resetear",
+    "placeHolders": {
+      "name": "Escribe tu nombre",
+      "email": "Escribe tu email",
+      "text": "Escribe tu mensaje, te contactaré lo antes posible!"
+    },
+    "toasts": {
+      "error": "Error al contactar",
+      "success": "Mensaje enviado correctamente"
+    },
+    "errors": {
+      "name": "El nombre es obligatorio",
+      "email": "El e-mail es obligatorio",
+      "text": "Escribe tu mensaje",
+      "wrongMail": "Por favor, usa un formato correcto de email: direccion@nombre.dominio"
+    }
   }
 }
