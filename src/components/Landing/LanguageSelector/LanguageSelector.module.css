@@ -1,0 +1,32 @@
+.languageSelector {
+  position: absolute;
+  top: 4rem;
+  right: 5rem;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  font-size: 1rem;
+  font-weight: bolder;
+  z-index: 10;
+}
+
+.languageSelector button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #777;
+  transition: color .2s ease;
+  font-weight: bolder;
+}
+
+.languageSelector button:hover {
+  color: var(--color-secondary);
+}
+
+.languageSelector span {
+  color: #bbb;
+}
+
+.active {
+  color: var(--color-primary)!important;
+}
