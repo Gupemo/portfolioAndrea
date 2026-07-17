@@ -14,6 +14,7 @@ export default function Button({
   return (
     <button
       {...props}
+      type="button"
       className={`${styles.button} ${styles[variant]}`}
     >
       {children}
