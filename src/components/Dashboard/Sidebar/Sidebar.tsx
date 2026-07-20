@@ -24,9 +24,9 @@ export default function Sidebar({ open, setOpen }: Props) {
         <nav className={styles.nav}> 
 
           <Link href="/dashboard/">Inicio</Link>
-
           <Link href="/dashboard/pictures">pictures</Link>
           <Link href="/dashboard/illustrations">illustrations</Link>
+          <Link href="/dashboard/contact">Contact</Link>
 
 
         </nav>
