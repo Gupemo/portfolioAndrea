@@ -17,14 +17,16 @@ export default async function RootLayout({
     const cookieStore = await cookies();
   const locale = cookieStore.get("locale")?.value || "en";
   return (
-    <html lang={locale}>
+    <html lang={locale} data-scroll-behavior="smooth">
       <body>
         <ToastContainer
           position="top-right"
         />
         <TranslationsProvider initialLocale={locale as Locale}>
           <main>
-            {children}
+            <div className="container">
+              {children}
+            </div>
           </main>
 
         </TranslationsProvider>
