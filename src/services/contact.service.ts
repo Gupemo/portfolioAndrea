@@ -1,10 +1,9 @@
 import { db } from "@/lib/db";
-import type { CreateContact } from "@/types/backend";
-
+import type { CreateContact, Contact } from "@/types/backend";
 
 export async function createContact(data: CreateContact) {
   const { name, email, contactMessage } = data;
-  console.log(name, email, contactMessage)
+  console.log(name, email, contactMessage);
 
   if (!name || !email || !contactMessage) {
     throw new Error("MISSING_FIELDS");
@@ -19,8 +18,23 @@ export async function createContact(data: CreateContact) {
     )
     VALUES (?, ?, ?)
     `,
-    [name, email, contactMessage]
+    [name, email, contactMessage],
   );
 
   return { ok: true };
+}
+
+export async function getContacts() {
+  const [rows] = await db.execute(
+    `
+    SELECT
+      id,
+      name,
+      email,
+      message
+    FROM contact
+    ORDER BY id DESC
+    `,
+  );
+  return rows
 }
