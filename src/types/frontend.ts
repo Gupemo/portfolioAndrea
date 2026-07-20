@@ -15,3 +15,9 @@ export type ContactType = {
   email: string,
   contactMessage: string
 }
+export type Contact = {
+  id: number,
+  name: string,
+  email: string,
+  message: string,
+}
