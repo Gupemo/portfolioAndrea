@@ -1,0 +1,99 @@
+.wrapper {
+  width: 100%;
+  padding: 2rem;
+}
+
+.contactTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+
+  background: white;
+  border-radius: 16px;
+
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, .08);
+}
+
+.contactTable thead {
+  background: #111;
+}
+
+.contactTable th {
+  color: white;
+  text-align: left;
+  padding: 18px 24px;
+  font-size: .9rem;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.contactTable td {
+  padding: 18px 24px;
+  border-bottom: 1px solid #ececec;
+}
+
+.row {
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.row:hover {
+  background: #f8f8f8;
+}
+
+.detailsRow td {
+  padding: 18px 22px;
+  background: #fafafa;
+  color: #555;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+  border-bottom: 1px solid #ececec;
+}
+
+.message {
+  padding: 24px;
+  animation: fadeIn .2s ease;
+}
+
+.message h4 {
+  margin: 0 0 12px;
+  color: #111;
+  font-size: 1rem;
+}
+
+.message p {
+  margin: 0;
+  color: #555;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.iconColumn {
+  width: 60px;
+}
+
+.icon {
+  width: 60px;
+  text-align: center;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
