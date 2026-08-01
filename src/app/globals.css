@@ -4,6 +4,7 @@
   --color-main: black;
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   --color-primary: rgb(255, 188, 65);
+  --sidebar-bg: #181818;
 }
 .dark {
   --background-main: rgb(3, 3, 3);
