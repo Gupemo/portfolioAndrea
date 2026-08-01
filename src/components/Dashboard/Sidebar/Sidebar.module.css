@@ -1,13 +1,11 @@
 .sidebar {
-  background: #181818;
+  background: var(--sidebar-bg);
   color: white;
-
-  transition: 0.3s;
-
-  overflow: hidden;
-
   height: 100vh;
+  overflow: hidden;
+  transition: all .3s ease;
 }
+
 
 .open {
   width: 260px;
@@ -19,45 +17,56 @@
 
 .toggle {
   margin: 20px;
-
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
   cursor: pointer;
+}
+
+.overlay {
+  display: none;
 }
 
 .nav {
   display: flex;
-
   flex-direction: column;
-
   gap: 20px;
-
   padding: 20px;
 }
 
 .nav a {
   color: white;
-
   text-decoration: none;
 }
 
-@media (max-width: 768px) {
-  .sidebar {
-    position: fixed;
 
-    top: 0;
-    left: 0;
+@media (max-width:768px){
 
-    z-index: 100;
-
-    width: 260px;
-
-    transform: translateX(-100%);
+  .sidebar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:260px;
+    height:100vh;
+    z-index:100;
+    transform:translateX(-100%);
   }
 
-  .sidebar.open {
-    transform: translateX(0);
+  .sidebar.open{
+    transform:translateX(0);
   }
 
-  .sidebar.closed {
-    transform: translateX(-100%);
+  .sidebar.closed{
+    transform:translateX(-100%);
   }
+
+  .overlay{
+    display:block;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    z-index:99;
+  }
+
 }

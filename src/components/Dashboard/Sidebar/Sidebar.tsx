@@ -7,30 +7,46 @@ type Props = {
 };
 
 export default function Sidebar({ open, setOpen }: Props) {
+  const handleLinkClick = () => {
+    if (window.innerWidth <= 768) {
+      setOpen(false);
+    }
+  };
+
   return (
-    <aside
-      className={`${styles.sidebar} ${
-        open ? styles.open : styles.closed
-      }`}
-    >
-      <button
-        className={styles.toggle}
-        onClick={() => setOpen(!open)}
-      >
-        ☰
-      </button>
-
+    <>
+      {/* Overlay */}
       {open && (
-        <nav className={styles.nav}> 
-
-          <Link href="/dashboard/">Inicio</Link>
-          <Link href="/dashboard/pictures">pictures</Link>
-          <Link href="/dashboard/illustrations">illustrations</Link>
-          <Link href="/dashboard/contact">Contact</Link>
-
-
-        </nav>
+        <div className={styles.overlay} onClick={() => setOpen(false)} />
       )}
-    </aside>
+
+      <aside
+        className={`${styles.sidebar} ${open ? styles.open : styles.closed}`}
+      >
+        <button className={styles.toggle} onClick={() => setOpen(!open)}>
+          ☰
+        </button>
+
+        {open && (
+          <nav className={styles.nav}>
+            <Link href="/dashboard/" onClick={handleLinkClick}>
+              Inicio
+            </Link>
+
+            <Link href="/dashboard/pictures" onClick={handleLinkClick}>
+              Pictures
+            </Link>
+
+            <Link href="/dashboard/illustrations" onClick={handleLinkClick}>
+              Illustrations
+            </Link>
+
+            <Link href="/dashboard/contact" onClick={handleLinkClick}>
+              Contact
+            </Link>
+          </nav>
+        )}
+      </aside>
+    </>
   );
 }

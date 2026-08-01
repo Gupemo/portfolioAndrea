@@ -13,15 +13,19 @@ export default function DashboardLayout({
 
   return (
     <div
-      className={`${styles.dashboard} ${
-        open ? styles.open : styles.closed
-      }`}
+      className={`${styles.dashboard} ${open ? styles.open : styles.closed}`}
     >
       <Sidebar open={open} setOpen={setOpen} />
 
-      <main className={styles.main}>
-        {children}
-      </main>
+      <div className={styles.content}>
+        <header className={styles.mobileHeader}>
+          <button className={styles.menuButton} onClick={() => setOpen(true)}>
+            ☰
+          </button>
+        </header>
+
+        <main className={styles.main}>{children}</main>
+      </div>
     </div>
   );
 }
