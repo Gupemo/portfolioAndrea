@@ -72,6 +72,7 @@
   white-space: pre-wrap;
   word-break: break-word;
 }
+.message small { display: block; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #e4e4e4; color: #777; }
 
 .iconColumn {
   width: 60px;

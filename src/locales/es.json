@@ -24,11 +24,23 @@
       "error": "Error al contactar",
       "success": "Mensaje enviado correctamente"
     },
+    "privacy": {
+      "controllerLabel": "Responsable",
+      "purposeLabel": "Finalidad",
+      "purpose": "Atender y responder tu consulta",
+      "legalBasisLabel": "Legitimación",
+      "legalBasis": "Tu consentimiento",
+      "rightsLabel": "Derechos",
+      "rights": "Puedes ejercerlos escribiendo a manquiito@gmail.com",
+      "accept": "He leído y acepto la",
+      "link": "Política de privacidad"
+    },
     "errors": {
       "name": "El nombre es obligatorio",
       "email": "El e-mail es obligatorio",
       "text": "Escribe tu mensaje",
-      "wrongMail": "Por favor, usa un formato correcto de email: direccion@nombre.dominio"
+      "wrongMail": "Por favor, usa un formato correcto de email: direccion@nombre.dominio",
+      "privacy": "Debes aceptar la Política de privacidad"
     }
   }
 }

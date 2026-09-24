@@ -26,6 +26,10 @@ curl -X POST http://localhost:3000/api/auth/sign-up/email \
 
 El acceso al panel está en `/login`. Las páginas y operaciones del dashboard validan la sesión en el servidor.
 
+## Privacidad del formulario de contacto
+
+La política inicial se encuentra en `src/lib/default-privacy-policy.ts` y puede editarse posteriormente desde `/dashboard/privacy`. El formulario exige una aceptación expresa y guarda la fecha y la versión aceptadas junto al mensaje. Antes de publicar, conviene que un profesional revise el texto legal para el caso concreto.
+
 ## Imágenes
 
 Las imágenes subidas se guardan en `uploads/`, que no se versiona. En producción hay que conservar esta carpeta entre despliegues y darle permisos de escritura al usuario que ejecuta Next.js.

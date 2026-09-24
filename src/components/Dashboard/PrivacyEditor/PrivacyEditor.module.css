@@ -1,0 +1,14 @@
+.wrapper { max-width: 1000px; margin: 0 auto; }
+.form { display: grid; gap: 2rem; padding: clamp(2rem, 5vw, 4rem); border: 1px solid #e9e3da; border-radius: 20px; background: white; box-shadow: 0 12px 40px rgba(35,26,10,.06); }
+.form h1 { margin: .3rem 0 0; font-size: clamp(3rem, 6vw, 5rem); }
+.eyebrow { margin: 0; color: #98650f; font-weight: 700; }
+.help { margin: 0; color: #68645e; }
+.version { justify-self: start; margin: 0; padding: .7rem 1rem; border-radius: 999px; background: #f2eee7; font-weight: 700; }
+.tabs { display: flex; gap: .8rem; padding-bottom: 1rem; border-bottom: 1px solid #ebe6de; }
+.tabs button { padding: .9rem 1.5rem; border: 0; border-radius: 999px; background: #efebe4; cursor: pointer; }
+.tabs .active { background: var(--color-primary); font-weight: 700; }
+.form label { display: grid; gap: .8rem; font-weight: 700; }
+.form textarea { width: 100%; padding: 1.4rem; border: 1px solid #d8d2c7; border-radius: 12px; font: inherit; font-weight: 400; line-height: 1.7; resize: vertical; }
+.form label span { color: #b91c1c; font-size: 1.4rem; }
+.submit { justify-self: start; min-height: 46px; padding: 0 2rem; border: 0; border-radius: 10px; background: #181818; color: white; font: inherit; font-weight: 700; cursor: pointer; }
+.submit:disabled { opacity: .6; }

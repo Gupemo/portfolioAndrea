@@ -9,6 +9,8 @@ type Contact = {
   name: string;
   email: string;
   message: string;
+  privacyAcceptedAt: string | null;
+  privacyVersion: string | null;
 };
 
 export default function ContactList() {
@@ -63,6 +65,9 @@ export default function ContactList() {
                   <td colSpan={3}>
                     <div className={styles.message}>
                       <p>{contact.message}</p>
+                      {contact.privacyAcceptedAt && <small>
+                        Privacidad aceptada: {new Date(contact.privacyAcceptedAt).toLocaleString("es-ES")} · versión {contact.privacyVersion}
+                      </small>}
                     </div>
                   </td>
                 </tr>

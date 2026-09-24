@@ -24,11 +24,23 @@
       "error": "Failed to send message",
       "success": "Your message has been sent"
     },
+    "privacy": {
+      "controllerLabel": "Controller",
+      "purposeLabel": "Purpose",
+      "purpose": "To receive and respond to your enquiry",
+      "legalBasisLabel": "Legal basis",
+      "legalBasis": "Your consent",
+      "rightsLabel": "Rights",
+      "rights": "You may exercise them by emailing manquiito@gmail.com",
+      "accept": "I have read and accept the",
+      "link": "Privacy Policy"
+    },
     "errors": {
       "name": "Name is required",
       "email": "E-mail is required",
       "text": "Please, enter a message",
-      "wrongMail": "Please, use a valid email address: address@name.domain"
+      "wrongMail": "Please, use a valid email address: address@name.domain",
+      "privacy": "You must accept the Privacy Policy"
     }
   }
 }

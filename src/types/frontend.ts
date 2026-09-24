@@ -13,11 +13,14 @@ export type TranslationsContextType = {
 export type ContactType = {
   name: string,
   email: string,
-  contactMessage: string
+  contactMessage: string,
+  privacyAccepted: boolean
 }
 export type Contact = {
   id: number,
   name: string,
   email: string,
   message: string,
+  privacyAcceptedAt: string | null,
+  privacyVersion: string | null,
 }

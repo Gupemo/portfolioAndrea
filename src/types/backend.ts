@@ -4,13 +4,16 @@ export type CreateContact = {
   id?: number,
   name: string,
   email: string,
-  contactMessage: string
+  contactMessage: string,
+  privacyAccepted: boolean
 }
 
 export type Contact = RowDataPacket & {
   id: number,
   name: string,
   email: string,
-  message: string
+  message: string,
+  privacyAcceptedAt: string | null,
+  privacyVersion: string | null
 
 }

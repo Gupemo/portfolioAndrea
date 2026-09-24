@@ -6,12 +6,18 @@ CREATE TABLE IF NOT EXISTS contact (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(250) NOT NULL,
     email VARCHAR(250) NOT NULL,
-    message TEXT NOT NULL
+    message TEXT NOT NULL,
+    privacy_accepted_at DATETIME NULL,
+    privacy_version VARCHAR(50) NULL
 ) ENGINE=InnoDB;
 
 -- Corrige instalaciones antiguas donde contact se creó sin identificador.
 ALTER TABLE contact
     ADD COLUMN IF NOT EXISTS id INT NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
+
+ALTER TABLE contact
+    ADD COLUMN IF NOT EXISTS privacy_accepted_at DATETIME NULL,
+    ADD COLUMN IF NOT EXISTS privacy_version VARCHAR(50) NULL;
 
 -- =========================
 -- ILLUSTRATIONS
@@ -62,6 +68,17 @@ CREATE TABLE IF NOT EXISTS picture_translations (
 CREATE TABLE IF NOT EXISTS about_translations (
     locale VARCHAR(5) NOT NULL PRIMARY KEY,
     content TEXT NOT NULL,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- =========================
+-- PRIVACY POLICY
+-- =========================
+
+CREATE TABLE IF NOT EXISTS privacy_policy_translations (
+    locale VARCHAR(5) NOT NULL PRIMARY KEY,
+    content LONGTEXT NOT NULL,
+    version VARCHAR(50) NOT NULL,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
