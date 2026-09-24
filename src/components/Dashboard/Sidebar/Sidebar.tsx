@@ -53,6 +53,9 @@ export default function Sidebar({ open, setOpen }: Props) {
             <Link href="/dashboard/contact" onClick={handleLinkClick}>
               Mensajes
             </Link>
+            <Link href="/dashboard/about" onClick={handleLinkClick}>
+              Sobre mí
+            </Link>
             <button className={styles.signOut} onClick={signOut}>Cerrar sesión</button>
           </nav>
         )}

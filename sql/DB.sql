@@ -56,6 +56,16 @@ CREATE TABLE IF NOT EXISTS picture_translations (
 ) ENGINE=InnoDB;
 
 -- =========================
+-- ABOUT ME
+-- =========================
+
+CREATE TABLE IF NOT EXISTS about_translations (
+    locale VARCHAR(5) NOT NULL PRIMARY KEY,
+    content TEXT NOT NULL,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- =========================
 -- BETTER AUTH
 -- =========================
 

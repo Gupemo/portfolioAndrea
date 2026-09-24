@@ -8,11 +8,20 @@ import Button from "@/components/ui/Button/Button";
 import styles from "./Hero.module.css";
 import buttonStyles from "@/components/ui/Button/Button.module.css";
 import ContactModal from "@/components/ContactModal/ContactModal";
+import AboutModal from "@/components/AboutModal/AboutModal";
 
 export default function Hero() {
-  const { translate } = useTranslations();
+  const { translate, locale } = useTranslations();
 
   const [contactOpen, setContactOpen] = useState(false)
+  const [aboutContent, setAboutContent] = useState<string | null>(null);
+
+  async function openAbout() {
+    const response = await fetch(`/api/about?locale=${locale}`);
+    if (!response.ok) return;
+    const data = await response.json();
+    setAboutContent(data.content);
+  }
 
   return (
     <section className={styles.hero}>
@@ -41,6 +50,14 @@ export default function Hero() {
           </p>
 
           <div className={styles.buttons}>
+            <Button variant="secondary" onClick={openAbout}>
+              {translate.landing.about}
+            </Button>
+            {aboutContent !== null && <AboutModal
+              title={translate.landing.about}
+              content={aboutContent}
+              onClose={() => setAboutContent(null)}
+            />}
             <Button variant="primary"
               onClick={() => setContactOpen(true)}>
               {translate.landing.contact}
