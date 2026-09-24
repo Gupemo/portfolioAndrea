@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { getContent } from "@/services/content.service";
 import type { ContentType, Locale } from "@/types/content";
 import styles from "./PortfolioGallery.module.css";
+import GalleryGrid from "./GalleryGrid";
 
 export default async function PortfolioGallery({ type }: { type: ContentType }) {
   const locale: Locale = (await cookies()).get("locale")?.value === "en" ? "en" : "es";
@@ -22,11 +22,6 @@ export default async function PortfolioGallery({ type }: { type: ContentType }) 
         <Link className={type === "picture" ? styles.active : ""} href="/photos">{copy.pictures}</Link>
       </nav>
     </header>
-    {items.length === 0 ? <p className={styles.empty}>{copy.empty}</p> : <section className={styles.grid}>
-      {items.map((item) => <article className={styles.card} key={item.id}>
-        <div className={styles.image}><Image src={item.image} alt={item.title} width={900} height={700} unoptimized /></div>
-        <div className={styles.text}><h2>{item.title}</h2><p>{item.description}</p></div>
-      </article>)}
-    </section>}
+    {items.length === 0 ? <p className={styles.empty}>{copy.empty}</p> : <GalleryGrid items={items} />}
   </main>;
 }

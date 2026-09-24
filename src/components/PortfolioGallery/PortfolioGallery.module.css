@@ -7,10 +7,35 @@
 .header nav a { padding-bottom: .5rem; color: #625f59; text-decoration: none; }
 .header nav .active { color: #111; border-bottom: 3px solid var(--color-primary); }
 .grid { max-width: 1300px; margin: auto; columns: 3 300px; column-gap: 2rem; }
-.card { break-inside: avoid; overflow: hidden; margin: 0 0 2rem; background: white; border-radius: 16px; box-shadow: 0 8px 30px rgba(38, 29, 13, .08); }
-.image img { display: block; width: 100%; height: auto; }
-.text { padding: 1.8rem; }
-.text h2 { margin: 0 0 .8rem; }
-.text p { margin: 0; color: #625f59; line-height: 1.6; white-space: pre-wrap; }
+.card { break-inside: avoid; overflow: hidden; width: 100%; margin: 0 0 2rem; padding: 0; border: 0; background: white; color: inherit; border-radius: 16px; box-shadow: 0 8px 30px rgba(38, 29, 13, .08); text-align: left; cursor: zoom-in; transition: transform .25s ease, box-shadow .25s ease; }
+.card:hover { transform: translateY(-4px); box-shadow: 0 16px 42px rgba(38, 29, 13, .14); }
+.card:focus-visible { outline: 4px solid var(--color-primary); outline-offset: 4px; }
+.image { position: relative; display: block; overflow: hidden; }
+.image img { display: block; width: 100%; height: auto; transition: transform .35s ease; }
+.card:hover .image img { transform: scale(1.025); }
+.viewHint { position: absolute; right: 1.2rem; bottom: 1.2rem; padding: .7rem 1rem; border-radius: 999px; background: rgba(20,20,20,.78); color: white; font-size: 1.3rem; opacity: 0; transform: translateY(5px); transition: opacity .2s, transform .2s; }
+.card:hover .viewHint, .card:focus-visible .viewHint { opacity: 1; transform: translateY(0); }
+.text { display: grid; gap: .8rem; padding: 1.8rem; }
+.text strong { font-size: 2rem; }
+.text > span { color: #625f59; line-height: 1.6; white-space: pre-wrap; }
 .empty { max-width: 1300px; margin: auto; padding: 4rem; text-align: center; background: white; border-radius: 16px; }
-@media (max-width: 600px) { .page { padding-top: 2rem; } .header > p { margin-top: 3rem; } }
+.modalOverlay { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 2rem; background: rgba(12, 11, 10, .88); backdrop-filter: blur(8px); animation: fadeIn .2s ease; }
+.modal { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 380px); width: min(95vw, 1400px); max-height: 92vh; overflow: hidden; background: #fff; border-radius: 20px; box-shadow: 0 30px 90px rgba(0,0,0,.45); }
+.close { position: absolute; top: 1.2rem; right: 1.2rem; z-index: 2; display: grid; place-items: center; width: 4.4rem; height: 4.4rem; border: 0; border-radius: 50%; background: rgba(20,20,20,.8); color: #fff; font-size: 3rem; line-height: 1; cursor: pointer; }
+.modalImage { min-height: 0; display: grid; place-items: center; padding: 2rem; background: #171615; }
+.modalImage img { display: block; width: 100%; height: 100%; max-height: calc(92vh - 4rem); object-fit: contain; }
+.modalText { overflow-y: auto; align-self: stretch; padding: 6rem 3rem 3rem; }
+.modalText h2 { margin: 0 0 1.5rem; font-size: 3rem; }
+.modalText p { margin: 0; color: #625f59; line-height: 1.7; white-space: pre-wrap; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@media (max-width: 760px) {
+  .page { padding-top: 2rem; }
+  .header > p { margin-top: 3rem; }
+  .modalOverlay { padding: 1rem; }
+  .modal { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) auto; width: 100%; max-height: 96vh; }
+  .modalImage { padding: 1rem; }
+  .modalImage img { max-height: 68vh; }
+  .modalText { padding: 2rem; max-height: 25vh; }
+  .modalText h2 { padding-right: 4rem; font-size: 2.4rem; }
+  .viewHint { display: none; }
+}
