@@ -26,8 +26,16 @@ ALTER TABLE contact
 CREATE TABLE IF NOT EXISTS illustrations (
     illustration_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     image VARCHAR(255) NOT NULL,
+    original_image VARCHAR(255) NULL,
+    watermark_type VARCHAR(20) NOT NULL DEFAULT 'none',
+    watermark_position VARCHAR(30) NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
+
+ALTER TABLE illustrations
+    ADD COLUMN IF NOT EXISTS original_image VARCHAR(255) NULL,
+    ADD COLUMN IF NOT EXISTS watermark_type VARCHAR(20) NOT NULL DEFAULT 'none',
+    ADD COLUMN IF NOT EXISTS watermark_position VARCHAR(30) NULL;
 
 CREATE TABLE IF NOT EXISTS illustration_translations (
     translation_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -47,8 +55,16 @@ CREATE TABLE IF NOT EXISTS illustration_translations (
 CREATE TABLE IF NOT EXISTS pictures (
     picture_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     image VARCHAR(255) NOT NULL,
+    original_image VARCHAR(255) NULL,
+    watermark_type VARCHAR(20) NOT NULL DEFAULT 'none',
+    watermark_position VARCHAR(30) NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
+
+ALTER TABLE pictures
+    ADD COLUMN IF NOT EXISTS original_image VARCHAR(255) NULL,
+    ADD COLUMN IF NOT EXISTS watermark_type VARCHAR(20) NOT NULL DEFAULT 'none',
+    ADD COLUMN IF NOT EXISTS watermark_position VARCHAR(30) NULL;
 
 CREATE TABLE IF NOT EXISTS picture_translations (
     translation_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,

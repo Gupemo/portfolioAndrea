@@ -3,6 +3,7 @@
 .eyebrow { margin: 0; color: #98650f; font-weight: 700; }
 .field { display: grid; gap: .7rem; font-weight: 650; }
 .field input, .field textarea { width: 100%; padding: 1.1rem 1.2rem; border: 1px solid #d8d2c7; border-radius: 10px; background: #fff; color: #171717; font: inherit; }
+.field select { width: 100%; min-height: 46px; padding: 0 1.2rem; border: 1px solid #d8d2c7; border-radius: 10px; background: #fff; color: #171717; font: inherit; }
 .field textarea { resize: vertical; }
 .field span { color: #b91c1c; font-size: 1.4rem; }
 .tabs { display: flex; gap: .8rem; padding-bottom: .8rem; border-bottom: 1px solid #eee8df; }
@@ -11,4 +12,13 @@
 .hint { margin: 0; color: #68645e; font-size: 1.4rem; }
 .submit { justify-self: start; min-height: 46px; padding: 0 2rem; border: 0; border-radius: 10px; background: #181818; color: white; font: inherit; font-weight: 700; cursor: pointer; }
 .submit:disabled { opacity: .6; }
+.watermark { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; padding: 2rem; border: 1px solid #ded8ce; border-radius: 14px; }
+.watermark legend { padding: 0 .8rem; font-weight: 750; }
+.watermark small { color: #68645e; font-weight: 400; }
+.previewButton { align-self: end; min-height: 46px; padding: 0 1.5rem; border: 1px solid #181818; border-radius: 10px; background: white; font: inherit; font-weight: 700; cursor: pointer; }
+.previewButton:disabled { opacity: .6; }
+.preview { overflow: hidden; padding: 1.4rem; border-radius: 14px; background: #171615; color: white; }
+.preview p { margin: 0 0 1rem; font-weight: 700; }
+.preview img { display: block; width: 100%; height: auto; max-height: 650px; object-fit: contain; }
 @media (max-width: 600px) { .form { padding: 2rem; } }
+@media (max-width: 600px) { .watermark { grid-template-columns: 1fr; } }

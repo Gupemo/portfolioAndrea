@@ -41,6 +41,9 @@ export async function getContent(type: ContentType, locale: Locale) {
 export async function createContent(
   type: ContentType,
   image: string,
+  originalImage: string,
+  watermarkType: string,
+  watermarkPosition: string,
   translations: Record<Locale, { title: string; description: string }>,
 ) {
   const current = config[type];
@@ -49,8 +52,9 @@ export async function createContent(
   try {
     await connection.beginTransaction();
     const [result] = await connection.execute<ResultSetHeader>(
-      `INSERT INTO ${current.table} (image) VALUES (?)`,
-      [image],
+      `INSERT INTO ${current.table} (image, original_image, watermark_type, watermark_position)
+       VALUES (?, ?, ?, ?)`,
+      [image, originalImage, watermarkType, watermarkPosition],
     );
 
     for (const locale of ["es", "en"] as const) {
@@ -75,11 +79,11 @@ export async function createContent(
 export async function deleteContent(type: ContentType, id: number) {
   const current = config[type];
   const [rows] = await db.execute<RowDataPacket[]>(
-    `SELECT image FROM ${current.table} WHERE ${current.id} = ?`,
+    `SELECT image, original_image AS originalImage FROM ${current.table} WHERE ${current.id} = ?`,
     [id],
   );
   if (!rows[0]) return null;
 
   await db.execute(`DELETE FROM ${current.table} WHERE ${current.id} = ?`, [id]);
-  return String(rows[0].image);
+  return { image: String(rows[0].image), originalImage: rows[0].originalImage ? String(rows[0].originalImage) : null };
 }

@@ -2,8 +2,10 @@ import { createContent, getContent, isContentType } from "@/services/content.ser
 import { getSession } from "@/lib/require-session";
 import type { Locale } from "@/types/content";
 import { mkdir, writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
+import { createDisplayImage, type WatermarkPosition, type WatermarkType } from "@/lib/watermark";
 
 const MAX_IMAGE_SIZE = 10 * 1024 * 1024;
 const extensions: Record<string, string> = {
@@ -12,6 +14,8 @@ const extensions: Record<string, string> = {
   "image/webp": "webp",
   "image/gif": "gif",
 };
+const watermarkTypes = new Set<WatermarkType>(["none", "text", "signature"]);
+const watermarkPositions = new Set<WatermarkPosition>(["top-left", "top-right", "center", "bottom-left", "bottom-right"]);
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -35,6 +39,11 @@ export async function POST(request: Request) {
     if (!extensions[image.type] || image.size === 0 || image.size > MAX_IMAGE_SIZE) {
       return Response.json({ error: "INVALID_IMAGE" }, { status: 400 });
     }
+    const rawWatermarkType = String(form.get("watermarkType") ?? "none") as WatermarkType;
+    const rawWatermarkPosition = String(form.get("watermarkPosition") ?? "bottom-right") as WatermarkPosition;
+    if (!watermarkTypes.has(rawWatermarkType) || !watermarkPositions.has(rawWatermarkPosition)) {
+      return Response.json({ error: "INVALID_WATERMARK" }, { status: 400 });
+    }
 
     const translations = {
       es: {
@@ -50,13 +59,44 @@ export async function POST(request: Request) {
       return Response.json({ error: "MISSING_TRANSLATIONS" }, { status: 400 });
     }
 
-    const filename = `${randomUUID()}.${extensions[image.type]}`;
+    const idToken = randomUUID();
+    const originalFilename = `${idToken}.${extensions[image.type]}`;
+    const filename = `${idToken}.webp`;
     const uploadDirectory = path.join(process.cwd(), "uploads");
-    await mkdir(uploadDirectory, { recursive: true });
-    await writeFile(path.join(uploadDirectory, filename), Buffer.from(await image.arrayBuffer()));
+    const originalDirectory = path.join(uploadDirectory, "originals");
+    const watermarkDirectory = path.join(uploadDirectory, "watermark");
+    await mkdir(originalDirectory, { recursive: true });
+    await mkdir(watermarkDirectory, { recursive: true });
+
+    const imageBuffer = Buffer.from(await image.arrayBuffer());
+    let signatureBuffer: Buffer | undefined;
+    if (rawWatermarkType === "signature") {
+      const signature = form.get("signature");
+      if (signature instanceof File && signature.size > 0) {
+        if (signature.type !== "image/png" || signature.size > 3 * 1024 * 1024) {
+          return Response.json({ error: "INVALID_SIGNATURE" }, { status: 400 });
+        }
+        signatureBuffer = Buffer.from(await signature.arrayBuffer());
+        await writeFile(path.join(watermarkDirectory, "signature.png"), signatureBuffer);
+      } else {
+        signatureBuffer = await readFile(path.join(watermarkDirectory, "signature.png")).catch(() => undefined);
+      }
+      if (!signatureBuffer) return Response.json({ error: "SIGNATURE_REQUIRED" }, { status: 400 });
+    }
+
+    const displayImage = await createDisplayImage(imageBuffer, rawWatermarkType, rawWatermarkPosition, signatureBuffer);
+    await writeFile(path.join(originalDirectory, originalFilename), imageBuffer);
+    await writeFile(path.join(uploadDirectory, filename), displayImage);
     const imageUrl = `/api/media/${filename}`;
 
-    const id = await createContent(type, imageUrl, translations);
+    const id = await createContent(
+      type,
+      imageUrl,
+      originalFilename,
+      rawWatermarkType,
+      rawWatermarkPosition,
+      translations,
+    );
     return Response.json({ ok: true, id }, { status: 201 });
   } catch (error) {
     console.error("Unable to create portfolio item", error);

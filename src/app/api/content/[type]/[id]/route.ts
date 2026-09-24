@@ -14,11 +14,13 @@ export async function DELETE(
     return Response.json({ error: "INVALID_REQUEST" }, { status: 400 });
   }
 
-  const image = await deleteContent(type, id);
-  if (!image) return Response.json({ error: "NOT_FOUND" }, { status: 404 });
+  const images = await deleteContent(type, id);
+  if (!images) return Response.json({ error: "NOT_FOUND" }, { status: 404 });
 
-  const filename = path.basename(image);
   const uploadDirectory = path.join(process.cwd(), "uploads");
-  await unlink(path.join(uploadDirectory, filename)).catch(() => undefined);
+  await unlink(path.join(uploadDirectory, path.basename(images.image))).catch(() => undefined);
+  if (images.originalImage) {
+    await unlink(path.join(uploadDirectory, "originals", path.basename(images.originalImage))).catch(() => undefined);
+  }
   return Response.json({ ok: true });
 }
