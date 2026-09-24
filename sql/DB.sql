@@ -6,7 +6,12 @@ CREATE TABLE IF NOT EXISTS contact (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(250) NOT NULL,
     email VARCHAR(250) NOT NULL,
-    message TEXT NOT NULL)
+    message TEXT NOT NULL
+) ENGINE=InnoDB;
+
+-- Corrige instalaciones antiguas donde contact se creó sin identificador.
+ALTER TABLE contact
+    ADD COLUMN IF NOT EXISTS id INT NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
 
 -- =========================
 -- ILLUSTRATIONS
@@ -48,4 +53,59 @@ CREATE TABLE IF NOT EXISTS picture_translations (
     CONSTRAINT fk_picture_translation FOREIGN KEY (picture_id) REFERENCES pictures(picture_id) ON DELETE CASCADE,
     CONSTRAINT uk_picture_locale
     UNIQUE (picture_id, locale)
+) ENGINE=InnoDB;
+
+-- =========================
+-- BETTER AUTH
+-- =========================
+
+CREATE TABLE IF NOT EXISTS `user` (
+    id VARCHAR(36) NOT NULL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    emailVerified BOOLEAN NOT NULL DEFAULT FALSE,
+    image TEXT NULL,
+    createdAt DATETIME NOT NULL,
+    updatedAt DATETIME NOT NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS `session` (
+    id VARCHAR(36) NOT NULL PRIMARY KEY,
+    expiresAt DATETIME NOT NULL,
+    token VARCHAR(255) NOT NULL UNIQUE,
+    createdAt DATETIME NOT NULL,
+    updatedAt DATETIME NOT NULL,
+    ipAddress TEXT NULL,
+    userAgent TEXT NULL,
+    userId VARCHAR(36) NOT NULL,
+    INDEX session_userId_idx (userId),
+    CONSTRAINT session_user_fk FOREIGN KEY (userId) REFERENCES `user`(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS account (
+    id VARCHAR(36) NOT NULL PRIMARY KEY,
+    accountId VARCHAR(255) NOT NULL,
+    providerId VARCHAR(255) NOT NULL,
+    userId VARCHAR(36) NOT NULL,
+    accessToken TEXT NULL,
+    refreshToken TEXT NULL,
+    idToken TEXT NULL,
+    accessTokenExpiresAt DATETIME NULL,
+    refreshTokenExpiresAt DATETIME NULL,
+    scope TEXT NULL,
+    password TEXT NULL,
+    createdAt DATETIME NOT NULL,
+    updatedAt DATETIME NOT NULL,
+    INDEX account_userId_idx (userId),
+    CONSTRAINT account_user_fk FOREIGN KEY (userId) REFERENCES `user`(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS verification (
+    id VARCHAR(36) NOT NULL PRIMARY KEY,
+    identifier VARCHAR(255) NOT NULL,
+    value TEXT NOT NULL,
+    expiresAt DATETIME NOT NULL,
+    createdAt DATETIME NULL,
+    updatedAt DATETIME NULL,
+    INDEX verification_identifier_idx (identifier)
 ) ENGINE=InnoDB;

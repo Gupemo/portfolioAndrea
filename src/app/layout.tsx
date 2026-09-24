@@ -5,8 +5,8 @@ import { Locale } from "@/types/frontend";
 import { cookies } from "next/headers";
 import "./globals.css";
 export const metadata: Metadata = {
-  title: "Andrea larrumbide",
-  description: "Illustrationd and photography porfolio",
+  title: "Andrea Larrumbide | Ilustración y fotografía",
+  description: "Portfolio de ilustración y fotografía de Andrea Larrumbide.",
 };
 
 export default async function RootLayout({

@@ -1,0 +1,16 @@
+.page { min-height: 100vh; padding: 4rem clamp(2rem, 6vw, 8rem) 8rem; background: #fbfaf7; }
+.header { max-width: 1300px; margin: 0 auto 4rem; }
+.header > a { color: #5f5a52; text-decoration: none; }
+.header > p { margin: 5rem 0 .5rem; color: #9b6710; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.header h1 { margin: 0; font-size: clamp(4rem, 8vw, 8rem); line-height: 1; }
+.header nav { display: flex; gap: 2rem; margin-top: 2.5rem; }
+.header nav a { padding-bottom: .5rem; color: #625f59; text-decoration: none; }
+.header nav .active { color: #111; border-bottom: 3px solid var(--color-primary); }
+.grid { max-width: 1300px; margin: auto; columns: 3 300px; column-gap: 2rem; }
+.card { break-inside: avoid; overflow: hidden; margin: 0 0 2rem; background: white; border-radius: 16px; box-shadow: 0 8px 30px rgba(38, 29, 13, .08); }
+.image img { display: block; width: 100%; height: auto; }
+.text { padding: 1.8rem; }
+.text h2 { margin: 0 0 .8rem; }
+.text p { margin: 0; color: #625f59; line-height: 1.6; white-space: pre-wrap; }
+.empty { max-width: 1300px; margin: auto; padding: 4rem; text-align: center; background: white; border-radius: 16px; }
+@media (max-width: 600px) { .page { padding-top: 2rem; } .header > p { margin-top: 3rem; } }

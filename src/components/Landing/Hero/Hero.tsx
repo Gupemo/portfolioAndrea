@@ -57,6 +57,12 @@ export default function Hero() {
             >
               {translate.landing.viewPortfolio}
             </Link>
+            <Link
+              href="/photos"
+              className={`${buttonStyles.button} ${buttonStyles.secondary}`}
+            >
+              {translate.landing.viewPhotos}
+            </Link>
           </div>
         </div>
       </div>

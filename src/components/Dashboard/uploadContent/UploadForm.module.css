@@ -1,0 +1,14 @@
+.form { display: grid; gap: 1.8rem; padding: 2.8rem; background: white; border: 1px solid #eee8df; border-radius: 20px; box-shadow: 0 12px 35px rgba(35, 26, 10, .06); }
+.form h2 { margin: .3rem 0 0; font-size: 2.6rem; }
+.eyebrow { margin: 0; color: #98650f; font-weight: 700; }
+.field { display: grid; gap: .7rem; font-weight: 650; }
+.field input, .field textarea { width: 100%; padding: 1.1rem 1.2rem; border: 1px solid #d8d2c7; border-radius: 10px; background: #fff; color: #171717; font: inherit; }
+.field textarea { resize: vertical; }
+.field span { color: #b91c1c; font-size: 1.4rem; }
+.tabs { display: flex; gap: .8rem; padding-bottom: .8rem; border-bottom: 1px solid #eee8df; }
+.tabs button { padding: .9rem 1.4rem; border: 0; border-radius: 999px; background: #f0ede7; cursor: pointer; }
+.tabs .active { background: var(--color-primary); font-weight: 700; }
+.hint { margin: 0; color: #68645e; font-size: 1.4rem; }
+.submit { justify-self: start; min-height: 46px; padding: 0 2rem; border: 0; border-radius: 10px; background: #181818; color: white; font: inherit; font-weight: 700; cursor: pointer; }
+.submit:disabled { opacity: .6; }
+@media (max-width: 600px) { .form { padding: 2rem; } }

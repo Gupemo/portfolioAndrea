@@ -1,7 +1,5 @@
-import React from 'react'
+import PortfolioGallery from "@/components/PortfolioGallery/PortfolioGallery";
 
-export default function page() {
-  return (
-    <div>page</div>
-  )
+export default function IllustrationsPage() {
+  return <PortfolioGallery type="illustration" />;
 }

@@ -86,14 +86,13 @@ export default function ContactModal({onClose}: Props) {
 
           <div className={styles.buttons}>
             <Button
-              onClick={handleSubmit(onSubmit)}
               variant='primary'
               type='submit'
-            >Enviar</Button>
+            >{translate.contactModal.submit}</Button>
             <Button 
               variant='secondary'
               onClick={() => reset()}
-            >Resetear</Button>
+            >{translate.contactModal.reset}</Button>
 
           </div>
 

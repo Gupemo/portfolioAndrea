@@ -26,6 +26,7 @@
 .mobileHeader {
   display: none;
 }
+.menuButton { border: 0; background: transparent; color: white; font-size: 2.6rem; cursor: pointer; }
 @media (max-width: 768px) {
   .dashboard {
     display: block;
@@ -42,6 +43,9 @@
     padding: 0 1rem;
     border-bottom: 1px solid #ddd;
     background: var(--sidebar-bg);
+    position: sticky;
+    top: 0;
+    z-index: 90;
   }
 
   .main {

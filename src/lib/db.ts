@@ -1,4 +1,4 @@
-import mysql from 'mysql2/promise'
+import mysql from "mysql2/promise";
 
 const globalForDb = globalThis as unknown as {
   db: ReturnType<typeof mysql.createPool>;
@@ -12,6 +12,7 @@ export const db =
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       port: parseInt(process.env.DB_PORT ?? "3306", 10),
+      timezone: "Z",
       connectionLimit: 10,
     });
 

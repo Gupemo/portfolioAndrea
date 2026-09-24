@@ -1,8 +1,5 @@
-import UploadForm from '@/components/Dashboard/uploadContent/UploadForm'
-import React from 'react'
+import ContentManager from "@/components/Dashboard/ContentManager/ContentManager";
 
-export default function page() {
-  return (
-    <UploadForm />
-  )
+export default function IllustrationsPage() {
+  return <ContentManager type="illustration" />;
 }

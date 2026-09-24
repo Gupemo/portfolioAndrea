@@ -3,7 +3,8 @@
     "altImg": "Andrea's image", 
     "title": "Illustrator & Photographer",
     "description": "texto de descripcion",
-    "viewPortfolio": "Explore my work",
+    "viewPortfolio": "View illustrations",
+    "viewPhotos": "View photography",
     "contact": "Contact me"
   },
   "contactModal": {
