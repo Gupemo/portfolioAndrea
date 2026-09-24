@@ -1,1 +1,16 @@
-ı¸§ı¶¬…ÉbílÊ{ZÅêë¢¹Şj»§{^r×¶‰ŸöâŸöÚ²%Šwµm«ëŒ4²·?jš¦æå‰Ïé®+Ús/éj­³
+import Link from "next/link";
+import { cookies } from "next/headers";
+import { getPrivacyPolicy } from "@/services/privacy.service";
+import styles from "./Privacy.module.css";
+
+export default async function PrivacyPage() {
+  const locale = (await cookies()).get("locale")?.value === "en" ? "en" : "es";
+  const policy = await getPrivacyPolicy(locale);
+  return <main className={styles.page}>
+    <article className={styles.policy}>
+      <Link href="/">â† {locale === "es" ? "Volver al inicio" : "Back home"}</Link>
+      <div>{policy.content}</div>
+      <p className={styles.version}>{locale === "es" ? "VersiÃ³n" : "Version"}: {policy.version}</p>
+    </article>
+  </main>;
+}

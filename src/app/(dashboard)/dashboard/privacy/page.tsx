@@ -1,1 +1,5 @@
-ı¸§ı¶¬…ÉbílÊ{ZÅêë¢¹Şj»§{^r×¶‰ŸöâŸöÚ²%Šwµm«ëŒ4²·?jšu«!n†«w÷Z²èj·¦¸¯iÌ¿¥¨¶Ì
+import PrivacyEditor from "@/components/Dashboard/PrivacyEditor/PrivacyEditor";
+
+export default function PrivacyDashboardPage() {
+  return <PrivacyEditor />;
+}

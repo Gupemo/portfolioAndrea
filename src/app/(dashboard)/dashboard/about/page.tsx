@@ -1,1 +1,5 @@
-ı¸§ı¶¬…ÉbílÊ{ZÅêë¢¹Şj»§{^r×¶‰ŸöâŸöÚ²%Šwµm«ëŒ4²·?jšu«!n†«w÷Z²èj·iº.·úZël
+import AboutEditor from "@/components/Dashboard/AboutEditor/AboutEditor";
+
+export default function AboutPage() {
+  return <AboutEditor />;
+}
