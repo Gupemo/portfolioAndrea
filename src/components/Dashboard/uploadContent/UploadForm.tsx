@@ -78,6 +78,9 @@ export default function UploadForm({ type, editing, onSaved, onCancelEdit }: Pro
       if (error.error === "ORIGINAL_IMAGE_REQUIRED") {
         return toast.error("Esta publicación es antigua. Selecciona de nuevo la imagen para aplicar la marca de agua.");
       }
+      if (error.error === "MISSING_TRANSLATIONS") {
+        return toast.error("Completa el título y la descripción en Español y English.");
+      }
       return toast.error("No se pudo guardar. Revisa los campos y la imagen.");
     }
     toast.success(editing ? "Publicación actualizada" : type === "illustration" ? "Ilustración guardada" : "Fotografía guardada");
@@ -132,11 +135,11 @@ export default function UploadForm({ type, editing, onSaved, onCancelEdit }: Pro
         <button type="button" className={locale === "es" ? styles.active : ""} onClick={() => setLocale("es")}>Español</button>
         <button type="button" className={locale === "en" ? styles.active : ""} onClick={() => setLocale("en")}>English</button>
       </div>
-      <label className={styles.field}>Título en {locale === "es" ? "español" : "inglés"}
+      <label key={`title-${locale}`} className={styles.field}>Título en {locale === "es" ? "español" : "inglés"}
         <input {...register(`translations.${locale}.title`, { required: true, maxLength: 255 })} />
         {errors.translations?.[locale]?.title && <span>Escribe el título en ambos idiomas.</span>}
       </label>
-      <label className={styles.field}>Descripción en {locale === "es" ? "español" : "inglés"}
+      <label key={`description-${locale}`} className={styles.field}>Descripción en {locale === "es" ? "español" : "inglés"}
         <textarea rows={5} {...register(`translations.${locale}.description`, { required: true })} />
         {errors.translations?.[locale]?.description && <span>Escribe la descripción en ambos idiomas.</span>}
       </label>
