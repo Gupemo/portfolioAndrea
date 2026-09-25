@@ -32,12 +32,14 @@ function textWatermark(width: number, height: number) {
   );
   const markHeight = Math.min(Math.round(height * 0.32), Math.round(markWidth * 0.22));
   const fontSize = Math.max(18, Math.round(markHeight * 0.48));
+  const textWidth = Math.max(1, markWidth - Math.max(24, Math.round(markWidth * 0.08)));
   return {
     width: markWidth,
     height: markHeight,
     buffer: Buffer.from(`<svg width="${markWidth}" height="${markHeight}" xmlns="http://www.w3.org/2000/svg">
       <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle"
-        font-family="Arial, sans-serif" font-size="${fontSize}" font-weight="600"
+        textLength="${textWidth}" lengthAdjust="spacingAndGlyphs"
+        font-family="DejaVu Sans, sans-serif" font-size="${fontSize}" font-weight="600"
         fill="white" fill-opacity="0.82" stroke="black" stroke-opacity="0.45" stroke-width="2">
         Andrea Larrumbide
       </text>

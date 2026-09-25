@@ -55,7 +55,10 @@ export default function UploadForm({ type, editing, onSaved, onCancelEdit }: Pro
     setPreviewing(false);
     if (!response.ok) {
       const error = await response.json().catch(() => ({}));
-      return toast.error(error.error === "SIGNATURE_REQUIRED" ? "Sube primero la firma en PNG." : "No se pudo generar la vista previa.");
+      if (error.error === "SIGNATURE_REQUIRED") return toast.error("Sube primero la firma en PNG.");
+      if (error.error === "INVALID_IMAGE") return toast.error("La imagen no es válida o supera los 10 MB.");
+      if (error.error === "INVALID_SIGNATURE") return toast.error("La firma debe ser un PNG de hasta 3 MB.");
+      return toast.error("No se pudo procesar la imagen. Revisa el registro del servidor.");
     }
     setPreviewUrl(URL.createObjectURL(await response.blob()));
   }
