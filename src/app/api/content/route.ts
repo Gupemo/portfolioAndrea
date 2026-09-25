@@ -100,6 +100,7 @@ export async function POST(request: Request) {
     return Response.json({ ok: true, id }, { status: 201 });
   } catch (error) {
     console.error("Unable to create portfolio item", error);
-    return Response.json({ error: "CREATE_FAILED" }, { status: 500 });
+    const detail = error instanceof Error ? error.message : String(error);
+    return Response.json({ error: "CREATE_FAILED", detail }, { status: 500 });
   }
 }

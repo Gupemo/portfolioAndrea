@@ -58,6 +58,7 @@ export default function UploadForm({ type, editing, onSaved, onCancelEdit }: Pro
       if (error.error === "SIGNATURE_REQUIRED") return toast.error("Sube primero la firma en PNG.");
       if (error.error === "INVALID_IMAGE") return toast.error("La imagen no es válida o supera los 10 MB.");
       if (error.error === "INVALID_SIGNATURE") return toast.error("La firma debe ser un PNG de hasta 3 MB.");
+      if (error.detail) return toast.error(`No se pudo procesar: ${error.detail}`);
       return toast.error("No se pudo procesar la imagen. Revisa el registro del servidor.");
     }
     setPreviewUrl(URL.createObjectURL(await response.blob()));
@@ -84,6 +85,7 @@ export default function UploadForm({ type, editing, onSaved, onCancelEdit }: Pro
       if (error.error === "MISSING_TRANSLATIONS") {
         return toast.error("Completa el título y la descripción en Español y English.");
       }
+      if (error.detail) return toast.error(`No se pudo guardar: ${error.detail}`);
       return toast.error("No se pudo guardar. Revisa los campos y la imagen.");
     }
     toast.success(editing ? "Publicación actualizada" : type === "illustration" ? "Ilustración guardada" : "Fotografía guardada");

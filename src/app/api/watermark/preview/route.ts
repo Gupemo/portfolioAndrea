@@ -38,7 +38,9 @@ export async function POST(request: Request) {
     const result = await createDisplayImage(Buffer.from(await image.arrayBuffer()), type, position, signatureBuffer);
     return new Response(result, { headers: { "Content-Type": "image/webp", "Cache-Control": "no-store" } });
   } catch (error) {
+    console.log("Watermark preview processing failed", error);
     console.error("Unable to generate watermark preview", error);
-    return Response.json({ error: "PREVIEW_FAILED" }, { status: 500 });
+    const detail = error instanceof Error ? error.message : String(error);
+    return Response.json({ error: "PREVIEW_FAILED", detail }, { status: 500 });
   }
 }
