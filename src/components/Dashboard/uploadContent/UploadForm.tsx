@@ -5,7 +5,7 @@ import { useForm, useWatch } from "react-hook-form";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import styles from "./UploadForm.module.css";
-import type { ContentType } from "@/types/content";
+import type { ContentType, EditablePortfolioItem } from "@/types/content";
 
 type Locale = "es" | "en";
 type FormValues = {
@@ -16,12 +16,23 @@ type FormValues = {
   translations: Record<Locale, { title: string; description: string }>;
 };
 
-export default function UploadForm({ type, onCreated }: { type: ContentType; onCreated?: () => void }) {
+type Props = {
+  type: ContentType;
+  editing?: EditablePortfolioItem | null;
+  onSaved?: () => void;
+  onCancelEdit?: () => void;
+};
+
+export default function UploadForm({ type, editing, onSaved, onCancelEdit }: Props) {
   const [locale, setLocale] = useState<Locale>("es");
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [previewing, setPreviewing] = useState(false);
   const { register, handleSubmit, reset, getValues, control, formState: { errors, isSubmitting } } = useForm<FormValues>({
-    defaultValues: { watermarkType: "text", watermarkPosition: "bottom-right" },
+    defaultValues: {
+      watermarkType: editing?.watermarkType ?? "text",
+      watermarkPosition: editing?.watermarkPosition ?? "bottom-right",
+      translations: editing?.translations,
+    },
   });
   const watermarkType = useWatch({ control, name: "watermarkType" });
 
@@ -37,7 +48,7 @@ export default function UploadForm({ type, onCreated }: { type: ContentType; onC
     const values = getValues();
     if (!values.image?.[0]) return toast.error("Selecciona primero una imagen.");
     const form = new FormData();
-    form.set("image", values.image[0]);
+    if (values.image?.[0]) form.set("image", values.image[0]);
     addWatermarkFields(form, values);
     setPreviewing(true);
     const response = await fetch("/api/watermark/preview", { method: "POST", body: form });
@@ -58,20 +69,33 @@ export default function UploadForm({ type, onCreated }: { type: ContentType; onC
       form.set(`title_${language}`, values.translations[language].title);
       form.set(`description_${language}`, values.translations[language].description);
     }
-    const response = await fetch("/api/content", { method: "POST", body: form });
-    if (!response.ok) return toast.error("No se pudo guardar. Revisa los campos y la imagen.");
-    toast.success(type === "illustration" ? "Ilustración guardada" : "Fotografía guardada");
+    const response = await fetch(
+      editing ? `/api/content/${type}/${editing.id}` : "/api/content",
+      { method: editing ? "PUT" : "POST", body: form },
+    );
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({}));
+      if (error.error === "ORIGINAL_IMAGE_REQUIRED") {
+        return toast.error("Esta publicación es antigua. Selecciona de nuevo la imagen para aplicar la marca de agua.");
+      }
+      return toast.error("No se pudo guardar. Revisa los campos y la imagen.");
+    }
+    toast.success(editing ? "Publicación actualizada" : type === "illustration" ? "Ilustración guardada" : "Fotografía guardada");
     reset();
     setPreviewUrl(null);
     setLocale("es");
-    onCreated?.();
+    onSaved?.();
   }
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <div><p className={styles.eyebrow}>Nueva publicación</p><h2>{type === "illustration" ? "Añadir ilustración" : "Añadir fotografía"}</h2></div>
-      <label className={styles.field}>Imagen (máximo 10 MB)
-        <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" {...register("image", { required: true })} />
+      <div><p className={styles.eyebrow}>{editing ? "Editar publicación" : "Nueva publicación"}</p><h2>{editing ? `Editar “${editing.title}”` : type === "illustration" ? "Añadir ilustración" : "Añadir fotografía"}</h2></div>
+      {editing && <div className={styles.currentImage}>
+        <p>Imagen publicada actualmente</p>
+        <Image src={editing.image} alt={editing.title} width={320} height={220} unoptimized />
+      </div>}
+      <label className={styles.field}>{editing ? "Nueva imagen (opcional)" : "Imagen"} (máximo 10 MB)
+        <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" {...register("image", { required: !editing })} />
         {errors.image && <span>Selecciona una imagen.</span>}
       </label>
       <fieldset className={styles.watermark}>
@@ -117,7 +141,10 @@ export default function UploadForm({ type, onCreated }: { type: ContentType; onC
         {errors.translations?.[locale]?.description && <span>Escribe la descripción en ambos idiomas.</span>}
       </label>
       <p className={styles.hint}>Completa las pestañas Español y English antes de guardar.</p>
-      <button className={styles.submit} disabled={isSubmitting}>{isSubmitting ? "Guardando…" : "Guardar obra"}</button>
+      <div className={styles.actions}>
+        <button className={styles.submit} disabled={isSubmitting}>{isSubmitting ? "Guardando…" : editing ? "Guardar cambios" : "Guardar obra"}</button>
+        {editing && <button className={styles.cancel} type="button" onClick={onCancelEdit} disabled={isSubmitting}>Cancelar</button>}
+      </div>
     </form>
   );
 }

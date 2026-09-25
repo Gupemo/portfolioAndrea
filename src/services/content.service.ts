@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import type { ContentType, Locale, PortfolioItem } from "@/types/content";
+import type { ContentType, EditablePortfolioItem, Locale, PortfolioItem } from "@/types/content";
 import type { ResultSetHeader, RowDataPacket } from "mysql2";
 
 const config = {
@@ -68,6 +68,86 @@ export async function createContent(
 
     await connection.commit();
     return result.insertId;
+  } catch (error) {
+    await connection.rollback();
+    throw error;
+  } finally {
+    connection.release();
+  }
+}
+
+export async function getContentForEdit(type: ContentType, id: number) {
+  const current = config[type];
+  const [items] = await db.execute<RowDataPacket[]>(
+    `SELECT ${current.id} AS id, image, original_image AS originalImage,
+      watermark_type AS watermarkType, watermark_position AS watermarkPosition,
+      created_at AS createdAt
+    FROM ${current.table} WHERE ${current.id} = ?`,
+    [id],
+  );
+  if (!items[0]) return null;
+
+  const [translations] = await db.execute<RowDataPacket[]>(
+    `SELECT locale, title, description FROM ${current.translationTable}
+     WHERE ${current.id} = ? AND locale IN ('es', 'en')`,
+    [id],
+  );
+  const localized = Object.fromEntries(
+    translations.map((translation) => [translation.locale, {
+      title: String(translation.title),
+      description: String(translation.description),
+    }]),
+  ) as EditablePortfolioItem["translations"];
+
+  if (!localized.es || !localized.en) return null;
+  return {
+    id,
+    type,
+    image: String(items[0].image),
+    originalImage: items[0].originalImage ? String(items[0].originalImage) : null,
+    createdAt: String(items[0].createdAt),
+    title: localized.es.title,
+    description: localized.es.description,
+    watermarkType: items[0].watermarkType ?? "none",
+    watermarkPosition: items[0].watermarkPosition ?? "bottom-right",
+    translations: localized,
+  };
+}
+
+export async function updateContent(
+  type: ContentType,
+  id: number,
+  image: string,
+  originalImage: string | null,
+  watermarkType: string,
+  watermarkPosition: string,
+  translations: Record<Locale, { title: string; description: string }>,
+) {
+  const current = config[type];
+  const connection = await db.getConnection();
+  try {
+    await connection.beginTransaction();
+    const [result] = await connection.execute<ResultSetHeader>(
+      `UPDATE ${current.table}
+       SET image = ?, original_image = ?, watermark_type = ?, watermark_position = ?
+       WHERE ${current.id} = ?`,
+      [image, originalImage, watermarkType, watermarkPosition, id],
+    );
+    if (result.affectedRows === 0) {
+      await connection.rollback();
+      return false;
+    }
+    for (const locale of ["es", "en"] as const) {
+      const translation = translations[locale];
+      await connection.execute(
+        `INSERT INTO ${current.translationTable} (${current.id}, locale, title, description)
+         VALUES (?, ?, ?, ?)
+         ON DUPLICATE KEY UPDATE title = VALUES(title), description = VALUES(description)`,
+        [id, locale, translation.title, translation.description],
+      );
+    }
+    await connection.commit();
+    return true;
   } catch (error) {
     await connection.rollback();
     throw error;

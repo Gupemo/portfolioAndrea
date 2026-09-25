@@ -9,3 +9,9 @@ export type PortfolioItem = {
   title: string;
   description: string;
 };
+
+export type EditablePortfolioItem = PortfolioItem & {
+  watermarkType: "none" | "text" | "signature";
+  watermarkPosition: "top-left" | "top-right" | "center" | "bottom-left" | "bottom-right";
+  translations: Record<Locale, { title: string; description: string }>;
+};
