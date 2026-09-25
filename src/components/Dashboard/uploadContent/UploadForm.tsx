@@ -86,7 +86,8 @@ export default function UploadForm({ type, editing, onSaved, onCancelEdit }: Pro
         return toast.error("Completa el título y la descripción en Español y English.");
       }
       if (error.detail) return toast.error(`No se pudo guardar: ${error.detail}`);
-      return toast.error("No se pudo guardar. Revisa los campos y la imagen.");
+      if (error.error) return toast.error(`No se pudo guardar: ${error.error}`);
+      return toast.error(`No se pudo guardar (HTTP ${response.status}).`);
     }
     toast.success(editing ? "Publicación actualizada" : type === "illustration" ? "Ilustración guardada" : "Fotografía guardada");
     reset();
