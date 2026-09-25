@@ -84,8 +84,7 @@
   font-size: 1.6rem;
   font-weight: 500;
 }
-.privacySummary { padding: 1.2rem; border-left: 4px solid var(--color-primary); border-radius: 8px; background: #faf7f0; color: #48443e; font-size: 1.35rem; }
-.privacySummary p { margin: .35rem 0; }
-.consent { display: flex; align-items: flex-start; gap: 1rem; color: #333; line-height: 1.5; cursor: pointer; }
+.consent { display: flex; align-items: flex-start; gap: 1rem; color: #333; line-height: 1.5; }
 .consent input { flex: 0 0 auto; width: 1.8rem; height: 1.8rem; margin-top: .2rem; accent-color: #c78718; }
-.consent a { color: #80540b; font-weight: 700; }
+.consent label { cursor: pointer; }
+.consent button { border: 0; padding: 0; background: transparent; color: #80540b; font: inherit; font-weight: 700; text-decoration: underline; cursor: pointer; }

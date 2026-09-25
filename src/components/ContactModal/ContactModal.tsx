@@ -1,18 +1,20 @@
 "use client"
+import { useState } from 'react'
 import { useTranslations } from '@/hooks/useTranslations'
 import {toast} from 'react-toastify'
 import styles from './ContactModal.module.css'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import type { ContactType } from '@/types/frontend'
 import Button from '../ui/Button/Button'
-import Link from "next/link";
+import PrivacyModal from '../PrivacyModal/PrivacyModal'
 
 type Props = {
   onClose: () => void
 }
 
 export default function ContactModal({onClose}: Props) {
-  const {translate} = useTranslations()
+  const {locale, translate} = useTranslations()
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false)
   const {register, handleSubmit, reset, formState: {errors} } = useForm<ContactType>({mode: "onChange"})
 
   const onSubmit: SubmitHandler<ContactType> = async (data) =>{
@@ -85,17 +87,15 @@ export default function ContactModal({onClose}: Props) {
           </div>
           {errors.contactMessage && <span className={styles.error}>{errors.contactMessage.message}</span>}
 
-          <div className={styles.privacySummary}>
-            <p><strong>{translate.contactModal.privacy.controllerLabel}:</strong> Guiomar Pérez Montesdeoca</p>
-            <p><strong>{translate.contactModal.privacy.purposeLabel}:</strong> {translate.contactModal.privacy.purpose}</p>
-            <p><strong>{translate.contactModal.privacy.legalBasisLabel}:</strong> {translate.contactModal.privacy.legalBasis}</p>
-            <p><strong>{translate.contactModal.privacy.rightsLabel}:</strong> {translate.contactModal.privacy.rights}</p>
+          <div className={styles.consent}>
+            <input id="privacyAccepted" type="checkbox" {...register("privacyAccepted", { required: translate.contactModal.errors.privacy })} />
+            <span>
+              <label htmlFor="privacyAccepted">{translate.contactModal.privacy.accept} </label>
+              <button type="button" onClick={() => setIsPrivacyOpen(true)}>
+                {translate.contactModal.privacy.link}
+              </button>.
+            </span>
           </div>
-
-          <label className={styles.consent}>
-            <input type="checkbox" {...register("privacyAccepted", { required: translate.contactModal.errors.privacy })} />
-            <span>{translate.contactModal.privacy.accept} <Link href="/privacy" target="_blank">{translate.contactModal.privacy.link}</Link>.</span>
-          </label>
           {errors.privacyAccepted && <span className={styles.error}>{errors.privacyAccepted.message}</span>}
 
           <div className={styles.buttons}>
@@ -113,6 +113,8 @@ export default function ContactModal({onClose}: Props) {
         </form>
 
       </div>
+
+      {isPrivacyOpen && <PrivacyModal locale={locale} onClose={() => setIsPrivacyOpen(false)} />}
 
     </div>
   )
